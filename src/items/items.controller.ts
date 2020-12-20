@@ -1,18 +1,21 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import Item from './item.interface';
 import { ItemDTO } from './items.dto';
+import { ItemsService } from './items.service';
 
 @Controller('items')
 export class ItemsController {
+  ItemsService: ItemsService;
   @Get()
-  findAll(): string {
-    return 'All Items';
+  async findAll(): Promise<Item[]> {
+    return this.ItemsService.findAll();
   }
   @Get(':id')
-  findById(@Param() param): string {
-    return param.id;
+  async findById(@Param() { id }: { id: string }): Promise<Item> {
+    return this.ItemsService.findById(id);
   }
   @Post()
-  create(@Body() itemDTO: ItemDTO): string {
-    return `Name: ${itemDTO.name} Desc: ${itemDTO.description} Quantity: ${itemDTO.quantity}`;
+  async create(@Body() itemDTO: ItemDTO): Promise<Item> {
+    return this.ItemsService.create(itemDTO);
   }
 }

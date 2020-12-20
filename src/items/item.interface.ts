@@ -1,5 +1,6 @@
 export default interface Item {
-  name: string;
-  description: string;
-  quanitty: number;
+  id?: string;
+  name?: string;
+  description?: string;
+  quanitty?: number;
 }
